@@ -1,0 +1,13 @@
+Name: LLVM
+Description: Low Level Virtual Machine
+#LibPaths: -L/usr/lib/llvm
+Libs: -L/usr/bin/llvm
+Libs: -lLLVMCore
+Libs: -lLLVMSupport
+Libs: -lLLVMSystem
+Libs: -lpthread
+Libs: -ldl
+Libs: -lm
+Includes: llvm-c/Core.h
+SourcePath: .
+
