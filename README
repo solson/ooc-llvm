@@ -2,7 +2,7 @@ At this point in time, compiling llvm-ooc is a mess. I just run these two comman
 
 OOC_LIBS=. ooc test.ooc +-DNDEBUG +-D_GNU_SOURCE +-D__STDC_LIMIT_MACROS +-D__STDC_CONSTANT_MACROS +-O3 +-fomit-frame-pointer +-fPIC -noclean -v -c
 
-g++ Writer.o ArrayList.o types.o Core.o List.o StringBuffer.o math.o vararg.o system.o memory.o stdio.o test.o -o test `llvm-config --ldflags` `llvm-config --libs core` -D__OOC_USE_GC__ -DNDEBUG -D_GNU_SOURCE -D__STDC_LIMIT_MACROS -D__STDC_CONSTANT_MACROS -O3 -fomit-frame-pointer -fPIC /home/scott/code/ooc/jooc/libs/linux64/libgc.a
+g++ Writer.o ArrayList.o types.o Core.o List.o StringBuffer.o math.o vararg.o system.o memory.o stdio.o test.o -o test `llvm-config --ldflags` `llvm-config --libs core` -O3 -fomit-frame-pointer -fPIC /home/scott/code/ooc/jooc/libs/linux64/libgc.a
 
 ./test
 
