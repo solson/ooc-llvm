@@ -1,0 +1,44 @@
+%{
+//#define YY_DEBUG
+
+#define YYSTYPE void*
+
+void zen_onMessage(void *name);
+%}
+
+Exp        = WS Message
+           | WS Terminator
+           | WS ( !EOL . )* EOL { printf("Ack, an error!\n"); }
+
+Message    = name:Symbol WS Arguments? { zen_onMessage(name); }
+
+Arguments  = OPEN_PAREN (Exp (COMMA Exp)* )? CLOS_PAREN
+
+Symbol     = (Identifier | Number) { $$=yytext; }
+
+Identifier = ([a-zA-Z_]+ | OperatorChar+) { $$=yytext; }
+
+OperatorChar = '=' | '-' | '+' | '*' | '/' | '^' | '&' | '|'
+
+Number     = [-+]? [0-9]+ { $$=yytext; }
+
+
+
+COMMA      = ',' -
+
+OPEN_PAREN = '(' -
+CLOS_PAREN = ')' -
+
+- = [ \t]*
+EOL = ('\n' | '\r\n' | '\r')
+Terminator = (EOL | '.')
+Comment    = (';' | "#!") .* EOL
+WS = ([ \t] | Comment | EOL)*
+
+%%
+
+void zen_parse()
+{
+  GREG* G = YY_ALLOC(sizeof(GREG), 0);
+  while (yyparse(G));
+}
