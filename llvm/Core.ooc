@@ -149,12 +149,12 @@ Builder: cover from LLVMBuilderRef {
 //                 LLVMBasicBlockRef Dest);
 
     // Arithmetic instructions
-    add: extern(LLVMBuildAdd)   func (lhs, rhs: Value, name: String) -> Value
+    add:  extern(LLVMBuildAdd)  func (lhs, rhs: Value, name: String) -> Value
     add_nsw: extern(LLVMBuildNSWAdd) func (lhs, rhs: Value, name: String) -> Value
     fadd: extern(LLVMBuildFAdd) func (lhs, rhs: Value, name: String) -> Value
-    sub: extern(LLVMBuildSub)   func (lhs, rhs: Value, name: String) -> Value
+    sub:  extern(LLVMBuildSub)  func (lhs, rhs: Value, name: String) -> Value
     fsub: extern(LLVMBuildFSub) func (lhs, rhs: Value, name: String) -> Value
-    mul: extern(LLVMBuildMul)   func (lhs, rhs: Value, name: String) -> Value
+    mul:  extern(LLVMBuildMul)  func (lhs, rhs: Value, name: String) -> Value
     fmul: extern(LLVMBuildFMul) func (lhs, rhs: Value, name: String) -> Value
     udiv: extern(LLVMBuildUDiv) func (lhs, rhs: Value, name: String) -> Value
     sdiv: extern(LLVMBuildSDiv) func (lhs, rhs: Value, name: String) -> Value
@@ -163,11 +163,11 @@ Builder: cover from LLVMBuilderRef {
     urem: extern(LLVMBuildURem) func (lhs, rhs: Value, name: String) -> Value
     srem: extern(LLVMBuildSRem) func (lhs, rhs: Value, name: String) -> Value
     frem: extern(LLVMBuildFRem) func (lhs, rhs: Value, name: String) -> Value
-    shl: extern(LLVMBuildShl)   func (lhs, rhs: Value, name: String) -> Value
+    shl:  extern(LLVMBuildShl)  func (lhs, rhs: Value, name: String) -> Value
     lshl: extern(LLVMBuildLShr) func (lhs, rhs: Value, name: String) -> Value
     ashr: extern(LLVMBuildAShr) func (lhs, rhs: Value, name: String) -> Value
-    and: extern(LLVMBuildAnd)   func (lhs, rhs: Value, name: String) -> Value
-    or: extern(LLVMBuildOr)     func (lhs, rhs: Value, name: String) -> Value
+    and:  extern(LLVMBuildAnd)  func (lhs, rhs: Value, name: String) -> Value
+    or:   extern(LLVMBuildOr)   func (lhs, rhs: Value, name: String) -> Value
     xor: extern(LLVMBuildXor)   func (lhs, rhs: Value, name: String) -> Value
     neg: extern(LLVMBuildNeg) func (val: Value, name: String) -> Value
     not: extern(LLVMBuildNot) func (val: Value, name: String) -> Value
