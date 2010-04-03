@@ -1,18 +1,18 @@
 use llvm
-
 import structs/ArrayList
 
-LLVMModule: cover from LLVMModuleRef {
+Module: cover from LLVMModuleRef {
   new: extern(LLVMModuleCreateWithName) static func (String) -> This
 
-  addFunction: func (functionType: LLVMType, name: String) -> LLVMFunction {
-    LLVMFunction new(this, name, functionType)
+  addFunction: func (functionType: Type, name: String) -> Function {
+    Function new(this, name, functionType)
   }
 
   dump: extern(LLVMDumpModule) func
 }
 
-LLVMType: cover from LLVMTypeRef {
+
+Type: cover from LLVMTypeRef {
   int32: extern(LLVMInt32Type) static func -> This
 
   function: static func (returnType: This, paramTypes: ArrayList<This>) -> This {
@@ -20,18 +20,20 @@ LLVMType: cover from LLVMTypeRef {
   }
 }
 
-LLVMValue: cover from LLVMValueRef {
+
+Value: cover from LLVMValueRef {
   name: extern(LLVMGetValueName) func -> String
   setName: extern(LLVMSetValueName) func (String)
 }
 
-LLVMFunction: cover from LLVMValueRef extends LLVMValue {
-  new: extern(LLVMAddFunction) static func (module: LLVMModule, name: String, functionType: LLVMType) -> This
 
-  appendBasicBlock: extern(LLVMAppendBasicBlock) func (String) -> LLVMBasicBlock
+Function: cover from LLVMValueRef extends Value {
+  new: extern(LLVMAddFunction) static func (module: Module, name: String, functionType: Type) -> This
 
-  args: func -> ArrayList<LLVMValue> {
-    argsList := ArrayList<LLVMValue> new()
+  appendBasicBlock: extern(LLVMAppendBasicBlock) func (String) -> BasicBlock
+
+  args: func -> ArrayList<Value> {
+    argsList := ArrayList<Value> new()
     param := LLVMGetFirstParam(this)
 
     while (param) {
@@ -43,28 +45,29 @@ LLVMFunction: cover from LLVMValueRef extends LLVMValue {
   }
 }
 
-LLVMBasicBlock: cover from LLVMBasicBlockRef
 
-LLVMBuilder: cover from LLVMBuilderRef {
+BasicBlock: cover from LLVMBasicBlockRef
+
+
+Builder: cover from LLVMBuilderRef {
   new: extern(LLVMCreateBuilder) static func -> This
 
-  new: static func ~atEnd (basicBlock: LLVMBasicBlock) -> This {
+  new: static func ~atEnd (basicBlock: BasicBlock) -> This {
     builder := This new()
     builder positionAtEnd(basicBlock)
     return builder
   }
 
-  positionAtEnd: extern(LLVMPositionBuilderAtEnd) func (LLVMBasicBlock)
+  positionAtEnd: extern(LLVMPositionBuilderAtEnd) func (BasicBlock)
 
   // terminator instructions
-  ret: extern(LLVMBuildRet) func (LLVMValue)
+  ret: extern(LLVMBuildRet) func (Value)
 
   // arithmethic, bitwise and logical
-  add: extern(LLVMBuildAdd) func (lhs, rhs: LLVMValue, name: String) -> LLVMValue
+  add: extern(LLVMBuildAdd) func (lhs, rhs: Value, name: String) -> Value
 }
 
-LLVMFunctionType: extern func (returnType: LLVMType, paramTypes: LLVMType*, paramCount: UInt, varArg: Int) -> LLVMType
 
-LLVMGetFirstParam: extern func (fn: LLVMFunction) -> LLVMValue
-LLVMGetNextParam: extern func (arg: LLVMValue) -> LLVMValue
-
+LLVMFunctionType: extern func (returnType: Type, paramTypes: Type*, paramCount: UInt, varArg: Int) -> Type
+LLVMGetFirstParam: extern func (Function) -> Value
+LLVMGetNextParam: extern func (Value) -> Value
