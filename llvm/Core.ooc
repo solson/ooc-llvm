@@ -39,7 +39,7 @@ Type: cover from LLVMTypeRef {
     function: extern(LLVMFunctionType) static func (returnType: Type, paramTypes: Type*, paramCount: UInt, isVarArg: Int) -> Type
 
     function: static func ~withArrayList (returnType: This, paramTypes: ArrayList<This>) -> This {
-        function(returnType, paramTypes toArray(), paramTypes size(), false)
+        function(returnType, paramTypes toArray(), paramTypes size(), false as Int)
     }
 
     isFunctionVarArg: extern(LLVMIsFunctionVarArg) func -> Int
