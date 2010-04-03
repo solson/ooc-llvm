@@ -174,7 +174,7 @@ Builder: cover from LLVMBuilderRef {
     ashr: extern(LLVMBuildAShr) func (lhs, rhs: Value, name: String) -> Value
     and: extern(LLVMBuildAnd)   func (lhs, rhs: Value, name: String) -> Value
     or: extern(LLVMBuildOr)     func (lhs, rhs: Value, name: String) -> Value
-    xor: extern(LLVMBuildXor) func (lhs, rhs: Value, name: String) -> Value
+    xor: extern(LLVMBuildXor)   func (lhs, rhs: Value, name: String) -> Value
     neg: extern(LLVMBuildNeg) func (val: Value, name: String) -> Value
     not: extern(LLVMBuildNot) func (val: Value, name: String) -> Value
 
