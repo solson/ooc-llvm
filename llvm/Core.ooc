@@ -217,7 +217,7 @@ Builder: cover from LLVMBuilderRef {
 LLVMGetFirstParam: extern func (Function) -> Value
 LLVMGetNextParam: extern func (Value) -> Value
 
-Attribute: cover from Int {
+Attribute: cover from LLVMAttribute {
     zext:            extern(LLVMZExtAttribute)            static This
     sext:            extern(LLVMSExtAttribute)            static This
     noReturn:        extern(LLVMNoReturnAttribute)        static This
@@ -240,23 +240,23 @@ Attribute: cover from Int {
     naked:           extern(LLVMNakedAttribute)           static This
 }
 
-//typedef enum {
-//  LLVMVoidTypeKind,        /**< type with no size */
-//  LLVMFloatTypeKind,       /**< 32 bit floating point type */
-//  LLVMDoubleTypeKind,      /**< 64 bit floating point type */
-//  LLVMX86_FP80TypeKind,    /**< 80 bit floating point type (X87) */
-//  LLVMFP128TypeKind,       /**< 128 bit floating point type (112-bit mantissa)*/
-//  LLVMPPC_FP128TypeKind,   /**< 128 bit floating point type (two 64-bits) */
-//  LLVMLabelTypeKind,       /**< Labels */
-//  LLVMIntegerTypeKind,     /**< Arbitrary bit width integers */
-//  LLVMFunctionTypeKind,    /**< Functions */
-//  LLVMStructTypeKind,      /**< Structures */
-//  LLVMArrayTypeKind,       /**< Arrays */
-//  LLVMPointerTypeKind,     /**< Pointers */
-//  LLVMOpaqueTypeKind,      /**< Opaque: type with unknown structure */
-//  LLVMVectorTypeKind,      /**< SIMD 'packed' format, or other vector type */
-//  LLVMMetadataTypeKind     /**< Metadata */
-//} LLVMTypeKind;
+TypeKind: cover from LLVMTypeKind {
+    void:      extern(LLVMVoidTypeKind)      static This
+    float:     extern(LLVMFloatTypeKind)     static This
+    double:    extern(LLVMDoubleTypeKind)    static This
+    x86_fp80:  extern(LLVMX86_FP80TypeKind)  static This
+    fp128:     extern(LLVMFP128TypeKind)     static This
+    ppc_fp128: extern(LLVMPPC_FP128TypeKind) static This
+    label:     extern(LLVMLabelTypeKind)     static This
+    integer:   extern(LLVMIntegerTypeKind)   static This
+    function:  extern(LLVMFunctionTypeKind)  static This
+    struct:    extern(LLVMStructTypeKind)    static This
+    array:     extern(LLVMArrayTypeKind)     static This
+    pointer:   extern(LLVMPointerTypeKind)   static This
+    opaque:    extern(LLVMOpaqueTypeKind)    static This
+    vector:    extern(LLVMVectorTypeKind)    static This
+    metadata:  extern(LLVMMetadataTypeKind)  static This
+}
 
 //typedef enum {
 //  LLVMExternalLinkage,    /**< Externally visible function */
