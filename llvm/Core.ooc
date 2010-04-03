@@ -77,8 +77,10 @@ Type: cover from LLVMTypeRef {
 
 
 Value: cover from LLVMValueRef {
+    type: extern(LLVMTypeOf) func -> Type
     name: extern(LLVMGetValueName) func -> String
     setName: extern(LLVMSetValueName) func (String)
+    dump: extern(LLVMDumpValue) func
 }
 
 
