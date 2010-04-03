@@ -43,4 +43,9 @@ main: func {
     // We've completed the definition now! Let's see the LLVM assembly
     // language representation of what we've created:
     my_module dump()
+
+
+    foo := Attribute naked
+    if(foo == Attribute noReturn) { "Wtf?" println() } else { "Yep." println() }
+    if(foo == Attribute naked) { "Yep." println() } else { "Wtf?" println() }
 }

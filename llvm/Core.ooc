@@ -208,8 +208,120 @@ Builder: cover from LLVMBuilderRef {
     pointerCast:    extern(LLVMBuildPointerCast)    func (Value, Type, name: String) -> Value
     intCast:        extern(LLVMBuildIntCast)        func (Value, Type, name: String) -> Value
     fpCast:         extern(LLVMBuildFPCast)         func (Value, Type, name: String) -> Value
+
+    // Comparison instructions
+//    icmp: extern(LLVMBuildICmp) func ()
 }
 
 
 LLVMGetFirstParam: extern func (Function) -> Value
 LLVMGetNextParam: extern func (Value) -> Value
+
+Attribute: cover from Int {
+    zext:            extern(LLVMZExtAttribute)            static This
+    sext:            extern(LLVMSExtAttribute)            static This
+    noReturn:        extern(LLVMNoReturnAttribute)        static This
+    inReg:           extern(LLVMInRegAttribute)           static This
+    structRet:       extern(LLVMStructRetAttribute)       static This
+    noUnwind:        extern(LLVMNoUnwindAttribute)        static This
+    noAlias:         extern(LLVMNoAliasAttribute)         static This
+    byVal:           extern(LLVMByValAttribute)           static This
+    nest:            extern(LLVMNestAttribute)            static This
+    readNone:        extern(LLVMReadNoneAttribute)        static This
+    readOnly:        extern(LLVMReadOnlyAttribute)        static This
+    noInline:        extern(LLVMNoInlineAttribute)        static This
+    alwaysInline:    extern(LLVMAlwaysInlineAttribute)    static This
+    optimizeForSize: extern(LLVMOptimizeForSizeAttribute) static This
+    stackProtect:    extern(LLVMStackProtectAttribute)    static This
+    stackProtectReq: extern(LLVMStackProtectReqAttribute) static This
+    noCapture:       extern(LLVMNoCaptureAttribute)       static This
+    noRedZone:       extern(LLVMNoRedZoneAttribute)       static This
+    noImplicitFloat: extern(LLVMNoImplicitFloatAttribute) static This
+    naked:           extern(LLVMNakedAttribute)           static This
+}
+
+//typedef enum {
+//  LLVMVoidTypeKind,        /**< type with no size */
+//  LLVMFloatTypeKind,       /**< 32 bit floating point type */
+//  LLVMDoubleTypeKind,      /**< 64 bit floating point type */
+//  LLVMX86_FP80TypeKind,    /**< 80 bit floating point type (X87) */
+//  LLVMFP128TypeKind,       /**< 128 bit floating point type (112-bit mantissa)*/
+//  LLVMPPC_FP128TypeKind,   /**< 128 bit floating point type (two 64-bits) */
+//  LLVMLabelTypeKind,       /**< Labels */
+//  LLVMIntegerTypeKind,     /**< Arbitrary bit width integers */
+//  LLVMFunctionTypeKind,    /**< Functions */
+//  LLVMStructTypeKind,      /**< Structures */
+//  LLVMArrayTypeKind,       /**< Arrays */
+//  LLVMPointerTypeKind,     /**< Pointers */
+//  LLVMOpaqueTypeKind,      /**< Opaque: type with unknown structure */
+//  LLVMVectorTypeKind,      /**< SIMD 'packed' format, or other vector type */
+//  LLVMMetadataTypeKind     /**< Metadata */
+//} LLVMTypeKind;
+
+//typedef enum {
+//  LLVMExternalLinkage,    /**< Externally visible function */
+//  LLVMAvailableExternallyLinkage,
+//  LLVMLinkOnceAnyLinkage, /**< Keep one copy of function when linking (inline)*/
+//  LLVMLinkOnceODRLinkage, /**< Same, but only replaced by something
+//                            equivalent. */
+//  LLVMWeakAnyLinkage,     /**< Keep one copy of function when linking (weak) */
+//  LLVMWeakODRLinkage,     /**< Same, but only replaced by something
+//                            equivalent. */
+//  LLVMAppendingLinkage,   /**< Special purpose, only applies to global arrays */
+//  LLVMInternalLinkage,    /**< Rename collisions when linking (static
+//                               functions) */
+//  LLVMPrivateLinkage,     /**< Like Internal, but omit from symbol table */
+//  LLVMDLLImportLinkage,   /**< Function to be imported from DLL */
+//  LLVMDLLExportLinkage,   /**< Function to be accessible from DLL */
+//  LLVMExternalWeakLinkage,/**< ExternalWeak linkage description */
+//  LLVMGhostLinkage,       /**< Stand-in functions for streaming fns from
+//                               bitcode */
+//  LLVMCommonLinkage,      /**< Tentative definitions */
+//  LLVMLinkerPrivateLinkage /**< Like Private, but linker removes. */
+//} LLVMLinkage;
+
+//typedef enum {
+//  LLVMDefaultVisibility,  /**< The GV is visible */
+//  LLVMHiddenVisibility,   /**< The GV is hidden */
+//  LLVMProtectedVisibility /**< The GV is protected */
+//} LLVMVisibility;
+
+//typedef enum {
+//  LLVMCCallConv           = 0,
+//  LLVMFastCallConv        = 8,
+//  LLVMColdCallConv        = 9,
+//  LLVMX86StdcallCallConv  = 64,
+//  LLVMX86FastcallCallConv = 65
+//} LLVMCallConv;
+
+//typedef enum {
+//  LLVMIntEQ = 32, /**< equal */
+//  LLVMIntNE,      /**< not equal */
+//  LLVMIntUGT,     /**< unsigned greater than */
+//  LLVMIntUGE,     /**< unsigned greater or equal */
+//  LLVMIntULT,     /**< unsigned less than */
+//  LLVMIntULE,     /**< unsigned less or equal */
+//  LLVMIntSGT,     /**< signed greater than */
+//  LLVMIntSGE,     /**< signed greater or equal */
+//  LLVMIntSLT,     /**< signed less than */
+//  LLVMIntSLE      /**< signed less or equal */
+//} LLVMIntPredicate;
+
+//typedef enum {
+//  LLVMRealPredicateFalse, /**< Always false (always folded) */
+//  LLVMRealOEQ,            /**< True if ordered and equal */
+//  LLVMRealOGT,            /**< True if ordered and greater than */
+//  LLVMRealOGE,            /**< True if ordered and greater than or equal */
+//  LLVMRealOLT,            /**< True if ordered and less than */
+//  LLVMRealOLE,            /**< True if ordered and less than or equal */
+//  LLVMRealONE,            /**< True if ordered and operands are unequal */
+//  LLVMRealORD,            /**< True if ordered (no nans) */
+//  LLVMRealUNO,            /**< True if unordered: isnan(X) | isnan(Y) */
+//  LLVMRealUEQ,            /**< True if unordered or equal */
+//  LLVMRealUGT,            /**< True if unordered or greater than */
+//  LLVMRealUGE,            /**< True if unordered, greater than, or equal */
+//  LLVMRealULT,            /**< True if unordered or less than */
+//  LLVMRealULE,            /**< True if unordered, less than, or equal */
+//  LLVMRealUNE,            /**< True if unordered or not equal */
+//  LLVMRealPredicateTrue   /**< Always true (always folded) */
+//} LLVMRealPredicate;
