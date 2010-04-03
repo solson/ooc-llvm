@@ -51,8 +51,8 @@ Type: cover from LLVMTypeRef {
     // Struct types
 //LLVMTypeRef LLVMStructTypeInContext(LLVMContextRef C, LLVMTypeRef *ElementTypes,
 //                                    unsigned ElementCount, int Packed);
-    structType: extern(LLVMStructType) static func (elementTypes:
-        This*, elementCount: UInt, isPacked: Int) -> This
+    structType: extern(LLVMStructType) static func (elementTypes: This*,
+        elementCount: UInt, isPacked: Int) -> This
     countStructElementTypes: extern(LLVMCountStructElementTypes) func -> UInt
     getStructElementTypes: extern(LLVMGetStructElementTypes) func (dest: This*)
     isPackedStruct: extern(LLVMIsPackedStruct) func -> Int
