@@ -107,6 +107,8 @@ BasicBlock: cover from LLVMBasicBlockRef
 
 
 Builder: cover from LLVMBuilderRef {
+//LLVMBuilderRef LLVMCreateBuilderInContext(LLVMContextRef C);
+
     new: extern(LLVMCreateBuilder) static func -> This
 
     new: static func ~atEnd (basicBlock: BasicBlock) -> This {
@@ -115,13 +117,69 @@ Builder: cover from LLVMBuilderRef {
         return builder
     }
 
+    position: extern(LLVMPositionBuilder) func (BasicBlock, Value)
+    positionBefore: extern (LLVMPositionBuilderBefore) func (Value)
     positionAtEnd: extern(LLVMPositionBuilderAtEnd) func (BasicBlock)
+    getInsertBlock: extern(LLVMGetInsertBlock) func -> BasicBlock
+    clearInsertionPosition: extern(LLVMClearInsertionPosition) func
+    insert: extern(LLVMInsertIntoBuilder) func (Value)
+    insert: extern(LLVMInsertIntoBuilderWithName) func ~withName (Value, String)
 
-    // terminator instructions
-    ret: extern(LLVMBuildRet) func (Value)
+    dispose: extern(LLVMDisposeBuilder) func
 
-    // arithmethic, bitwise and logical
-    add: extern(LLVMBuildAdd) func (lhs, rhs: Value, name: String) -> Value
+    // Terminator instructions
+    retVoid: extern(LLVMBuildRetVoid) func -> Value
+    ret: extern(LLVMBuildRet) func (Value) -> Value
+    aggregateRet: extern(LLVMBuildAggregateRet) func (Value*, UInt) -> Value
+    br: extern(LLVMBuildBr) func (dest: BasicBlock) -> Value
+    condBr: extern(LLVMBuildCondBr) func (condition: Value,
+                                          thenBlock: BasicBlock,
+                                          elseBlock: BasicBlock
+                                         ) -> Value
+    switch: extern(LLVMBuildSwitch) func (val: Value,
+                                          elseBlock: BasicBlock,
+                                          numCases: UInt
+                                         ) -> Value
+    invoke: extern(LLVMBuildInvoke) func (fn: Value,
+                                          args: Value*,
+                                          numArgs: UInt,
+                                          thenBlock: BasicBlock,
+                                          catchBlock: BasicBlock,
+                                          name: String
+                                         ) -> Value
+    unwind: extern(LLVMBuildUnwind) func -> Value
+    unreachable: extern(LLVMBuildUnreachable) func -> Value
+
+///* Add a case to the switch instruction */
+//void LLVMAddCase(LLVMValueRef Switch, LLVMValueRef OnVal,
+//                 LLVMBasicBlockRef Dest);
+
+    // Arithmetic instructions
+    add: extern(LLVMBuildAdd)   func (lhs, rhs: Value, name: String) -> Value
+    add_nsw: extern(LLVMBuildNSWAdd) func (lhs, rhs: Value, name: String) -> Value
+    fadd: extern(LLVMBuildFAdd) func (lhs, rhs: Value, name: String) -> Value
+    sub: extern(LLVMBuildSub)   func (lhs, rhs: Value, name: String) -> Value
+    fsub: extern(LLVMBuildFSub) func (lhs, rhs: Value, name: String) -> Value
+    mul: extern(LLVMBuildMul)   func (lhs, rhs: Value, name: String) -> Value
+    fmul: extern(LLVMBuildFMul) func (lhs, rhs: Value, name: String) -> Value
+    udiv: extern(LLVMBuildUDiv) func (lhs, rhs: Value, name: String) -> Value
+    sdiv: extern(LLVMBuildSDiv) func (lhs, rhs: Value, name: String) -> Value
+    sdiv_exact: extern(LLVMBuildExactSDiv) func (lhs, rhs: Value, name: String) -> Value
+    fdiv: extern(LLVMBuildFDiv) func (lhs, rhs: Value, name: String) -> Value
+    urem: extern(LLVMBuildURem) func (lhs, rhs: Value, name: String) -> Value
+    srem: extern(LLVMBuildSRem) func (lhs, rhs: Value, name: String) -> Value
+    frem: extern(LLVMBuildFRem) func (lhs, rhs: Value, name: String) -> Value
+    shl: extern(LLVMBuildShl)   func (lhs, rhs: Value, name: String) -> Value
+    lshl: extern(LLVMBuildLShr) func (lhs, rhs: Value, name: String) -> Value
+    ashr: extern(LLVMBuildAShr) func (lhs, rhs: Value, name: String) -> Value
+    and: extern(LLVMBuildAnd)   func (lhs, rhs: Value, name: String) -> Value
+    or: extern(LLVMBuildOr)     func (lhs, rhs: Value, name: String) -> Value
+    xor: extern(LLVMBuildXor) func (lhs, rhs: Value, name: String) -> Value
+    neg: extern(LLVMBuildNeg) func (val: Value, name: String) -> Value
+    not: extern(LLVMBuildNot) func (val: Value, name: String) -> Value
+
+    // Memory instructions
+//    malloc: extern(LLVMBuildMalloc) func ()
 }
 
 
