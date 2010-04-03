@@ -8,7 +8,7 @@ main: func {
 
     // All the types involved here are "int"s. This type is represented
     // by an object of the llvm.core.Type class:
-    int_t := Type int32() // by default 32 bits
+    int_t := Type int32()
 
     // We need to represent the class of functions that accept two integers
     // and return an integer. This is represented by an object of the
