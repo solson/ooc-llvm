@@ -36,7 +36,8 @@ Type: cover from LLVMTypeRef {
     ppc_fp128: extern(LLVMPPCFP128Type) static func -> This
 
     // Function types
-    function: extern(LLVMFunctionType) static func (returnType: Type, paramTypes: Type*, paramCount: UInt, isVarArg: Int) -> Type
+    function: extern(LLVMFunctionType) static func (returnType: Type,
+        paramTypes: Type*, paramCount: UInt, isVarArg: Int) -> Type
 
     function: static func ~withArrayList (returnType: This, paramTypes: ArrayList<This>) -> This {
         function(returnType, paramTypes toArray() as This*, paramTypes size(), false as Int)
@@ -50,7 +51,8 @@ Type: cover from LLVMTypeRef {
     // Struct types
 //LLVMTypeRef LLVMStructTypeInContext(LLVMContextRef C, LLVMTypeRef *ElementTypes,
 //                                    unsigned ElementCount, int Packed);
-    structType: extern(LLVMStructType) static func (elementTypes: This*, elementCount: UInt, isPacked: Int) -> This
+    structType: extern(LLVMStructType) static func (elementTypes:
+        This*, elementCount: UInt, isPacked: Int) -> This
     countStructElementTypes: extern(LLVMCountStructElementTypes) func -> UInt
     getStructElementTypes: extern(LLVMGetStructElementTypes) func (dest: This*)
     isPackedStruct: extern(LLVMIsPackedStruct) func -> Int
@@ -133,20 +135,12 @@ Builder: cover from LLVMBuilderRef {
     aggregateRet: extern(LLVMBuildAggregateRet) func (Value*, UInt) -> Value
     br: extern(LLVMBuildBr) func (dest: BasicBlock) -> Value
     condBr: extern(LLVMBuildCondBr) func (condition: Value,
-                                          thenBlock: BasicBlock,
-                                          elseBlock: BasicBlock
-                                         ) -> Value
-    switch: extern(LLVMBuildSwitch) func (val: Value,
-                                          elseBlock: BasicBlock,
-                                          numCases: UInt
-                                         ) -> Value
-    invoke: extern(LLVMBuildInvoke) func (fn: Value,
-                                          args: Value*,
-                                          numArgs: UInt,
-                                          thenBlock: BasicBlock,
-                                          catchBlock: BasicBlock,
-                                          name: String
-                                         ) -> Value
+        thenBlock: BasicBlock, elseBlock: BasicBlock) -> Value
+    switch: extern(LLVMBuildSwitch) func (val: Value, elseBlock: BasicBlock,
+        numCases: UInt) -> Value
+    invoke: extern(LLVMBuildInvoke) func (fn: Value, args: Value*,
+        numArgs: UInt, thenBlock: BasicBlock, catchBlock: BasicBlock,
+        name: String) -> Value
     unwind: extern(LLVMBuildUnwind) func -> Value
     unreachable: extern(LLVMBuildUnreachable) func -> Value
 
@@ -186,20 +180,12 @@ Builder: cover from LLVMBuilderRef {
     free:  extern(LLVMBuildFree) func (pointer: Value) -> Value
     load:  extern(LLVMBuildLoad) func (pointer: Value, name: String) -> Value
     store: extern(LLVMBuildStore) func (val: Value, ptr: Value) -> Value
-    gep: extern(LLVMBuildGEP) func (ptr: Value,
-                                    indices: Value*,
-                                    numIndicies: UInt,
-                                    name: String
-                                   ) -> Value
+    gep: extern(LLVMBuildGEP) func (ptr: Value, indices: Value*,
+        numIndicies: UInt, name: String) -> Value
     gep_inbounds: extern(LLVMBuildInBoundsGEP) func (ptr: Value,
-                                                     indices: Value*,
-                                                     numIndicies: UInt,
-                                                     name: String
-                                                    ) -> Value
-    gep_struct: extern(LLVMBuildStructGEP) func (ptr: Value,
-                                                 idx: UInt,
-                                                 name: String
-                                                ) -> Value
+        indices: Value*, numIndicies: UInt, name: String) -> Value
+    gep_struct: extern(LLVMBuildStructGEP) func (ptr: Value, idx: UInt,
+        name: String) -> Value
     globalString:    extern(LLVMBuildGlobalString) func (str: String, name: String) -> Value
     globalStringPtr: extern(LLVMBuildGlobalStringPtr) func (str: String, name: String) -> Value
 
