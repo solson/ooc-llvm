@@ -179,7 +179,49 @@ Builder: cover from LLVMBuilderRef {
     not: extern(LLVMBuildNot) func (val: Value, name: String) -> Value
 
     // Memory instructions
-//    malloc: extern(LLVMBuildMalloc) func ()
+    malloc: extern(LLVMBuildMalloc) func (Type, name: String) -> Value
+    alloca: extern(LLVMBuildAlloca) func (Type, name: String) -> Value
+    arrayMalloc: extern(LLVMBuildArrayMalloc) func (Type, Value, name: String) -> Value
+    arrayAlloca: extern(LLVMBuildArrayMalloc) func (Type, Value, name: String) -> Value
+    free:  extern(LLVMBuildFree) func (pointer: Value) -> Value
+    load:  extern(LLVMBuildLoad) func (pointer: Value, name: String) -> Value
+    store: extern(LLVMBuildStore) func (val: Value, ptr: Value) -> Value
+    gep: extern(LLVMBuildGEP) func (ptr: Value,
+                                    indices: Value*,
+                                    numIndicies: UInt,
+                                    name: String
+                                   ) -> Value
+    gep_inbounds: extern(LLVMBuildInBoundsGEP) func (ptr: Value,
+                                                     indices: Value*,
+                                                     numIndicies: UInt,
+                                                     name: String
+                                                    ) -> Value
+    gep_struct: extern(LLVMBuildStructGEP) func (ptr: Value,
+                                                 idx: UInt,
+                                                 name: String
+                                                ) -> Value
+    globalString:    extern(LLVMBuildGlobalString) func (str: String, name: String) -> Value
+    globalStringPtr: extern(LLVMBuildGlobalStringPtr) func (str: String, name: String) -> Value
+
+    // Cast instructions
+    trunc:          extern(LLVMBuildTrunc)          func (Value, Type, name: String) -> Value
+    zext:           extern(LLVMBuildZExt)           func (Value, Type, name: String) -> Value
+    sext:           extern(LLVMBuildSExt)           func (Value, Type, name: String) -> Value
+    fptoui:         extern(LLVMBuildFPToUI)         func (Value, Type, name: String) -> Value
+    fptosi:         extern(LLVMBuildFPToSI)         func (Value, Type, name: String) -> Value
+    uitofp:         extern(LLVMBuildUIToFP)         func (Value, Type, name: String) -> Value
+    sitofp:         extern(LLVMBuildSIToFP)         func (Value, Type, name: String) -> Value
+    fptrunc:        extern(LLVMBuildFPTrunc)        func (Value, Type, name: String) -> Value
+    fpext:          extern(LLVMBuildFPExt)          func (Value, Type, name: String) -> Value
+    ptrtoint:       extern(LLVMBuildPtrToInt)       func (Value, Type, name: String) -> Value
+    inttoptr:       extern(LLVMBuildIntToPtr)       func (Value, Type, name: String) -> Value
+    bitcast:        extern(LLVMBuildBitCast)        func (Value, Type, name: String) -> Value
+    zextOrBitcast:  extern(LLVMBuildZExtOrBitCast)  func (Value, Type, name: String) -> Value
+    sextOrBitcast:  extern(LLVMBuildSExtOrBitCast)  func (Value, Type, name: String) -> Value
+    truncOrBitcast: extern(LLVMBuildTruncOrBitCast) func (Value, Type, name: String) -> Value
+    pointerCast:    extern(LLVMBuildPointerCast)    func (Value, Type, name: String) -> Value
+    intCast:        extern(LLVMBuildIntCast)        func (Value, Type, name: String) -> Value
+    fpCast:         extern(LLVMBuildFPCast)         func (Value, Type, name: String) -> Value
 }
 
 
