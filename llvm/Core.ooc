@@ -186,7 +186,7 @@ Builder: cover from LLVMBuilderRef {
         indices: Value*, numIndicies: UInt, name: String) -> Value
     gep_struct: extern(LLVMBuildStructGEP) func (ptr: Value, idx: UInt,
         name: String) -> Value
-    globalString:    extern(LLVMBuildGlobalString) func (str: String, name: String) -> Value
+    globalString:    extern(LLVMBuildGlobalString)    func (str: String, name: String) -> Value
     globalStringPtr: extern(LLVMBuildGlobalStringPtr) func (str: String, name: String) -> Value
 
     // Cast instructions
