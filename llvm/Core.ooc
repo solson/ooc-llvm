@@ -1,14 +1,37 @@
 use llvm
 import structs/ArrayList
 
+
+// Modules
+Context: cover from LLVMContextRef {
+    new: extern(LLVMContextCreate) static func -> This
+
+    getGlobal: extern(LLVMGetGlobalContext) static func -> This
+
+    dispose: extern(LLVMContextDispose) func
+}
+
 Module: cover from LLVMModuleRef {
     new: extern(LLVMModuleCreateWithName) static func (String) -> This
+    new: extern(LLVMModuleCreateWithNameInContext) static func ~inContext (String, Context) -> This
+
+    dispose: extern(LLVMDisposeModule) func
+
+    getDataLayout: extern(LLVMGetDataLayout) func -> String
+    setDataLayout: extern(LLVMSetDataLayout) func (triple: String)
+
+    getTarget: extern(LLVMGetTarget) func -> String
+    setTarget: extern(LLVMSetTarget) func (triple: String)
+
+    addTypeName: extern(LLVMAddTypeName) func (name: String, Type) -> Int
+    deleteTypename: extern(LLVMDeleteTypeName) func (name: String)
+    getTypeByName: extern(LLVMGetTypeByName) func (name: String) -> Type
+
+    dump: extern(LLVMDumpModule) func
 
     addFunction: func (functionType: Type, name: String) -> Function {
         Function new(this, name, functionType)
     }
-
-    dump: extern(LLVMDumpModule) func
 }
 
 
@@ -80,13 +103,13 @@ Type: cover from LLVMTypeRef {
 
 Value: cover from LLVMValueRef {
     type: extern(LLVMTypeOf) func -> Type
-    name: extern(LLVMGetValueName) func -> String
+    getName: extern(LLVMGetValueName) func -> String
     setName: extern(LLVMSetValueName) func (String)
     dump: extern(LLVMDumpValue) func
 }
 
 
-Function: cover from LLVMValueRef extends Value {
+Function: cover from Value {
     new: extern(LLVMAddFunction) static func (module: Module, name: String, functionType: Type) -> This
 
     appendBasicBlock: extern(LLVMAppendBasicBlock) func (String) -> BasicBlock
@@ -221,6 +244,8 @@ Builder: cover from LLVMBuilderRef {
 LLVMGetFirstParam: extern func (Function) -> Value
 LLVMGetNextParam: extern func (Value) -> Value
 
+
+// Enums
 Attribute: cover from LLVMAttribute {
     zext:            extern(LLVMZExtAttribute)            static This
     sext:            extern(LLVMSExtAttribute)            static This
