@@ -250,6 +250,14 @@ Builder: cover from LLVMBuilderRef {
 }
 
 
+// Module providers
+ModuleProvider: cover from LLVMModuleProviderRef {
+    new: extern(LLVMCreateModuleProviderForExistingModule) static func (Module) -> This
+
+    dispose: extern(LLVMDisposeModuleProvider) func
+}
+
+
 LLVMGetFirstParam: extern func (Function) -> Value
 LLVMGetNextParam: extern func (Value) -> Value
 

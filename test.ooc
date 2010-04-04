@@ -1,10 +1,10 @@
 use llvm
-import llvm/Core
+import llvm/[Core, ExecutionEngine]
 import structs/ArrayList
 
 main: func {
     // Create an (empty) module.
-    my_module := Module new("my_module")
+    myModule := Module new("my_module")
 
     // Get the i32 type
     int_t := Type int32()
@@ -16,7 +16,7 @@ main: func {
 
     // Now we need a function named 'sum' using this type. Functions are not
     // free-standing; thye need to be contained in a module.
-    sum := my_module addFunction(func_t, "sum")
+    sum := myModule addFunction(func_t, "sum")
 
     // Let's name the function arguments 'a', 'b', and 'c'.
     sum args()[0] setName("a")
@@ -41,7 +41,18 @@ main: func {
 
     // We've completed the definition now! Let's see the LLVM assembly
     // language representation of what we've created:
-    my_module dump()
+    myModule dump()
+
+    // Now, to try to run the function!
+    provider := ModuleProvider new(myModule)
+    engine := ExecutionEngine new(provider)
+
+    arg1 := GenericValue new(int_t, 10 as ULLong, 0)
+    arg2 := GenericValue new(int_t, 5  as ULLong, 0)
+    arg3 := GenericValue new(int_t, 2  as ULLong, 0)
+
+    result := engine runFunction(sum, 3, [arg1, arg2, arg3] as GenericValue[])
+    result toInt(0) toString() println()
 
     // A simple test for the enum covers. Currently broken in rock.
     foo := Attribute naked
