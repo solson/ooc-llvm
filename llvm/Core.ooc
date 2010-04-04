@@ -9,6 +9,20 @@ Context: cover from LLVMContextRef {
     getGlobal: extern(LLVMGetGlobalContext) static func -> This
 
     dispose: extern(LLVMContextDispose) func
+
+    // Types
+    float:     extern(LLVMFloatTypeInContext)    func -> Value
+    double:    extern(LLVMDoubleTypeInContext)   func -> Value
+    xf86_fp80: extern(LLVMX86FP80TypeInContext)  func -> Value
+    fp128:     extern(LLVMFP128TypeInContext)    func -> Value
+    ppc_fp128: extern(LLVMPPCFP128TypeInContext) func -> Value
+
+    struct: extern(LLVMStructTypeInContext) func (elementTypes: Type*,
+        elementCount: UInt, isPacked: Int) -> Value
+
+    void:   extern(LLVMVoidTypeInContext)   func -> Value
+    label:  extern(LLVMLabelTypeInContext)  func -> Value
+    opaque: extern(LLVMOpaqueTypeInContext) func -> Value
 }
 
 Module: cover from LLVMModuleRef {
@@ -35,6 +49,7 @@ Module: cover from LLVMModuleRef {
 }
 
 
+// Types
 Type: cover from LLVMTypeRef {
     // Integer types
     int1:  extern(LLVMInt1Type)  static func -> This
@@ -46,12 +61,6 @@ Type: cover from LLVMTypeRef {
     getIntTypeWidth: extern(LLVMGetIntTypeWidth) func -> UInt
 
     // Real types
-//LLVMTypeRef LLVMFloatTypeInContext(LLVMContextRef C);
-//LLVMTypeRef LLVMDoubleTypeInContext(LLVMContextRef C);
-//LLVMTypeRef LLVMX86FP80TypeInContext(LLVMContextRef C);
-//LLVMTypeRef LLVMFP128TypeInContext(LLVMContextRef C);
-//LLVMTypeRef LLVMPPCFP128TypeInContext(LLVMContextRef C);
-
     float:     extern(LLVMFloatType)    static func -> This
     double:    extern(LLVMDoubleType)   static func -> This
     x86_fp80:  extern(LLVMX86FP80Type)  static func -> This
@@ -72,8 +81,6 @@ Type: cover from LLVMTypeRef {
     getParamTypes: extern(LLVMGetParamTypes) func (dest: This*)
 
     // Struct types
-//LLVMTypeRef LLVMStructTypeInContext(LLVMContextRef C, LLVMTypeRef *ElementTypes,
-//                                    unsigned ElementCount, int Packed);
     structType: extern(LLVMStructType) static func (elementTypes: This*,
         elementCount: UInt, isPacked: Int) -> This
     countStructElementTypes: extern(LLVMCountStructElementTypes) func -> UInt
@@ -91,10 +98,6 @@ Type: cover from LLVMTypeRef {
     getVectorSize: extern(LLVMGetVectorSize) func -> UInt
 
     // Other types
-//LLVMTypeRef LLVMVoidTypeInContext(LLVMContextRef C);
-//LLVMTypeRef LLVMLabelTypeInContext(LLVMContextRef C);
-//LLVMTypeRef LLVMOpaqueTypeInContext(LLVMContextRef C);
-
     void:   extern(LLVMVoidType)   static func -> This
     label:  extern(LLVMLabelType)  static func -> This
     opaque: extern(LLVMOpaqueType) static func -> This
@@ -132,9 +135,8 @@ BasicBlock: cover from LLVMBasicBlockRef
 
 
 Builder: cover from LLVMBuilderRef {
-//LLVMBuilderRef LLVMCreateBuilderInContext(LLVMContextRef C);
-
     new: extern(LLVMCreateBuilder) static func -> This
+    new: extern(LLVMCreateBuilderInContext) static func ~inContext (Context) -> This
 
     new: static func ~atEnd (basicBlock: BasicBlock) -> This {
         builder := This new()
@@ -157,19 +159,22 @@ Builder: cover from LLVMBuilderRef {
     ret: extern(LLVMBuildRet) func (Value) -> Value
     aggregateRet: extern(LLVMBuildAggregateRet) func (Value*, UInt) -> Value
     br: extern(LLVMBuildBr) func (dest: BasicBlock) -> Value
+
     condBr: extern(LLVMBuildCondBr) func (condition: Value,
         thenBlock: BasicBlock, elseBlock: BasicBlock) -> Value
+
     switch: extern(LLVMBuildSwitch) func (val: Value, elseBlock: BasicBlock,
         numCases: UInt) -> Value
+
     invoke: extern(LLVMBuildInvoke) func (fn: Value, args: Value*,
         numArgs: UInt, thenBlock: BasicBlock, catchBlock: BasicBlock,
         name: String) -> Value
+
     unwind: extern(LLVMBuildUnwind) func -> Value
     unreachable: extern(LLVMBuildUnreachable) func -> Value
 
-///* Add a case to the switch instruction */
-//void LLVMAddCase(LLVMValueRef Switch, LLVMValueRef OnVal,
-//                 LLVMBasicBlockRef Dest);
+    // Add a case to the switch instruction
+    addCase: extern(LLVMAddCase) static func (switchInstr: Value, onVal: Value, dest: BasicBlock)
 
     // Arithmetic instructions
     add:  extern(LLVMBuildAdd)  func (lhs, rhs: Value, name: String) -> Value
