@@ -168,24 +168,27 @@ Builder: cover from LLVMBuilderRef {
     ashr: extern(LLVMBuildAShr) func (lhs, rhs: Value, name: String) -> Value
     and:  extern(LLVMBuildAnd)  func (lhs, rhs: Value, name: String) -> Value
     or:   extern(LLVMBuildOr)   func (lhs, rhs: Value, name: String) -> Value
-    xor: extern(LLVMBuildXor)   func (lhs, rhs: Value, name: String) -> Value
-    neg: extern(LLVMBuildNeg) func (val: Value, name: String) -> Value
-    not: extern(LLVMBuildNot) func (val: Value, name: String) -> Value
+    xor:  extern(LLVMBuildXor)  func (lhs, rhs: Value, name: String) -> Value
+    neg:  extern(LLVMBuildNeg)  func (val: Value, name: String) -> Value
+    not:  extern(LLVMBuildNot)  func (val: Value, name: String) -> Value
 
     // Memory instructions
     malloc: extern(LLVMBuildMalloc) func (Type, name: String) -> Value
     alloca: extern(LLVMBuildAlloca) func (Type, name: String) -> Value
     arrayMalloc: extern(LLVMBuildArrayMalloc) func (Type, Value, name: String) -> Value
     arrayAlloca: extern(LLVMBuildArrayMalloc) func (Type, Value, name: String) -> Value
-    free:  extern(LLVMBuildFree) func (pointer: Value) -> Value
-    load:  extern(LLVMBuildLoad) func (pointer: Value, name: String) -> Value
+
+    free:  extern(LLVMBuildFree)  func (pointer: Value) -> Value
+    load:  extern(LLVMBuildLoad)  func (pointer: Value, name: String) -> Value
     store: extern(LLVMBuildStore) func (val: Value, ptr: Value) -> Value
+
     gep: extern(LLVMBuildGEP) func (ptr: Value, indices: Value*,
         numIndicies: UInt, name: String) -> Value
     gep_inbounds: extern(LLVMBuildInBoundsGEP) func (ptr: Value,
         indices: Value*, numIndicies: UInt, name: String) -> Value
     gep_struct: extern(LLVMBuildStructGEP) func (ptr: Value, idx: UInt,
         name: String) -> Value
+
     globalString:    extern(LLVMBuildGlobalString)    func (str: String, name: String) -> Value
     globalStringPtr: extern(LLVMBuildGlobalStringPtr) func (str: String, name: String) -> Value
 
