@@ -210,7 +210,8 @@ Builder: cover from LLVMBuilderRef {
     fpCast:         extern(LLVMBuildFPCast)         func (Value, Type, name: String) -> Value
 
     // Comparison instructions
-//    icmp: extern(LLVMBuildICmp) func ()
+    icmp: extern(LLVMBuildICmp) func (IntPredicate,  lhs, rhs: Value, name: String) -> Value
+    fcmp: extern(LLVMBuildICmp) func (RealPredicate, lhs, rhs: Value, name: String) -> Value
 }
 
 
@@ -258,70 +259,66 @@ TypeKind: cover from LLVMTypeKind {
     metadata:  extern(LLVMMetadataTypeKind)  static This
 }
 
-//typedef enum {
-//  LLVMExternalLinkage,    /**< Externally visible function */
-//  LLVMAvailableExternallyLinkage,
-//  LLVMLinkOnceAnyLinkage, /**< Keep one copy of function when linking (inline)*/
-//  LLVMLinkOnceODRLinkage, /**< Same, but only replaced by something
-//                            equivalent. */
-//  LLVMWeakAnyLinkage,     /**< Keep one copy of function when linking (weak) */
-//  LLVMWeakODRLinkage,     /**< Same, but only replaced by something
-//                            equivalent. */
-//  LLVMAppendingLinkage,   /**< Special purpose, only applies to global arrays */
-//  LLVMInternalLinkage,    /**< Rename collisions when linking (static
-//                               functions) */
-//  LLVMPrivateLinkage,     /**< Like Internal, but omit from symbol table */
-//  LLVMDLLImportLinkage,   /**< Function to be imported from DLL */
-//  LLVMDLLExportLinkage,   /**< Function to be accessible from DLL */
-//  LLVMExternalWeakLinkage,/**< ExternalWeak linkage description */
-//  LLVMGhostLinkage,       /**< Stand-in functions for streaming fns from
-//                               bitcode */
-//  LLVMCommonLinkage,      /**< Tentative definitions */
-//  LLVMLinkerPrivateLinkage /**< Like Private, but linker removes. */
-//} LLVMLinkage;
+Linkage: cover from LLVMLinkage {
+    external:            extern(LLVMExternalLinkage)            static This
+    availableExternally: extern(LLVMAvailableExternallyLinkage) static This
+    linkOnceAny:         extern(LLVMLinkOnceAnyLinkage)         static This
+    linkOnceODR:         extern(LLVMLinkOnceODRLinkage)         static This
+    weakAny:             extern(LLVMWeakAnyLinkage)             static This
+    weakODR:             extern(LLVMWeakODRLinkage)             static This
+    appending:           extern(LLVMAppendingLinkage)           static This
+    internal:            extern(LLVMInternalLinkage)            static This
+    private:             extern(LLVMPrivateLinkage)             static This
+    dllImport:           extern(LLVMDLLImportLinkage)           static This
+    dllExport:           extern(LLVMDLLExportLinkage)           static This
+    externalWeak:        extern(LLVMExternalWeakLinkage)        static This
+    ghost:               extern(LLVMGhostLinkage)               static This
+    common:              extern(LLVMCommonLinkage)              static This
+    linkerPrivate:       extern(LLVMLinkerPrivateLinkage)       static This
+}
 
-//typedef enum {
-//  LLVMDefaultVisibility,  /**< The GV is visible */
-//  LLVMHiddenVisibility,   /**< The GV is hidden */
-//  LLVMProtectedVisibility /**< The GV is protected */
-//} LLVMVisibility;
+Visibility: cover from LLVMVisibility {
+    default:   extern(LLVMDefaultVisibility)   static This
+    hidden:    extern(LLVMHiddenVisibility)    static This
+    protected: extern(LLVMProtectedVisibility) static This
+}
 
-//typedef enum {
-//  LLVMCCallConv           = 0,
-//  LLVMFastCallConv        = 8,
-//  LLVMColdCallConv        = 9,
-//  LLVMX86StdcallCallConv  = 64,
-//  LLVMX86FastcallCallConv = 65
-//} LLVMCallConv;
+CallConv: cover from LLVMCallConv {
+    ccall:       extern(LLVMCCallConv)           static This
+    fast:        extern(LLVMFastCallConv)        static This
+    cold:        extern(LLVMColdCallConv)        static This
+    x86stdcall:  extern(LLVMX86StdcallCallConv)  static This
+    x86fastcall: extern(LLVMX86FastcallCallConv) static This
+}
 
-//typedef enum {
-//  LLVMIntEQ = 32, /**< equal */
-//  LLVMIntNE,      /**< not equal */
-//  LLVMIntUGT,     /**< unsigned greater than */
-//  LLVMIntUGE,     /**< unsigned greater or equal */
-//  LLVMIntULT,     /**< unsigned less than */
-//  LLVMIntULE,     /**< unsigned less or equal */
-//  LLVMIntSGT,     /**< signed greater than */
-//  LLVMIntSGE,     /**< signed greater or equal */
-//  LLVMIntSLT,     /**< signed less than */
-//  LLVMIntSLE      /**< signed less or equal */
-//} LLVMIntPredicate;
+IntPredicate: cover from LLVMIntPredicate {
+    eq:  extern(LLVMIntEQ)  static This
+    ne:  extern(LLVMIntNE)  static This
+    ugt: extern(LLVMIntUGT) static This
+    uge: extern(LLVMIntUGE) static This
+    ult: extern(LLVMIntULT) static This
+    ule: extern(LLVMIntULE) static This
+    sgt: extern(LLVMIntSGT) static This
+    sge: extern(LLVMIntSGE) static This
+    slt: extern(LLVMIntSLT) static This
+    sle: extern(LLVMIntSLE) static This
+}
 
-//typedef enum {
-//  LLVMRealPredicateFalse, /**< Always false (always folded) */
-//  LLVMRealOEQ,            /**< True if ordered and equal */
-//  LLVMRealOGT,            /**< True if ordered and greater than */
-//  LLVMRealOGE,            /**< True if ordered and greater than or equal */
-//  LLVMRealOLT,            /**< True if ordered and less than */
-//  LLVMRealOLE,            /**< True if ordered and less than or equal */
-//  LLVMRealONE,            /**< True if ordered and operands are unequal */
-//  LLVMRealORD,            /**< True if ordered (no nans) */
-//  LLVMRealUNO,            /**< True if unordered: isnan(X) | isnan(Y) */
-//  LLVMRealUEQ,            /**< True if unordered or equal */
-//  LLVMRealUGT,            /**< True if unordered or greater than */
-//  LLVMRealUGE,            /**< True if unordered, greater than, or equal */
-//  LLVMRealULT,            /**< True if unordered or less than */
-//  LLVMRealULE,            /**< True if unordered, less than, or equal */
-//  LLVMRealUNE,            /**< True if unordered or not equal */
-//  LLVMRealPredicateTrue   /**< Always true (always folded) */
-//} LLVMRealPredicate;
+RealPredicate: cover from LLVMRealPredicate {
+    truePred:  extern(LLVMRealPredicateTrue)  static This
+    falsePred: extern(LLVMRealPredicateFalse) static This
+    oeq: extern(LLVMRealOEQ) static This
+    ogt: extern(LLVMRealOGT) static This
+    oge: extern(LLVMRealOGE) static This
+    olt: extern(LLVMRealOLT) static This
+    ole: extern(LLVMRealOLE) static This
+    one: extern(LLVMRealONE) static This
+    ord: extern(LLVMRealORD) static This
+    uno: extern(LLVMRealUNO) static This
+    ueq: extern(LLVMRealUEQ) static This
+    ugt: extern(LLVMRealUGT) static This
+    uge: extern(LLVMRealUGE) static This
+    ult: extern(LLVMRealULT) static This
+    ule: extern(LLVMRealULE) static This
+    une: extern(LLVMRealUNE) static This
+}
