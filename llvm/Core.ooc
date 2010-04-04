@@ -243,6 +243,21 @@ Builder: cover from LLVMBuilderRef {
     // Comparison instructions
     icmp: extern(LLVMBuildICmp) func (IntPredicate,  lhs, rhs: Value, name: String) -> Value
     fcmp: extern(LLVMBuildICmp) func (RealPredicate, lhs, rhs: Value, name: String) -> Value
+
+    // Miscellaneous instructions
+    phi: extern(LLVMBuildPhi) func (Type, name: String) -> Value
+    call: extern(LLVMBuildCall) func (fn: Value, args: Value*, numArgs: UInt, name: String) -> Value
+    select: extern(LLVMBuildSelect) func (ifVal, thenVal, elseVal: Value, name: String) -> Value
+    va_arg: extern(LLVMBuildVAArg) func (list: Value, Type, name: String) -> Value
+    extractElement: extern(LLVMBuildExtractElement) func (vector, index: Value, name: String) -> Value
+    insertElement: extern(LLVMBuildInsertElement) func (vector, val, index: Value, name: String) -> Value
+    shuffleVector: extern(LLVMBuildShuffleVector) func (v1, v2, mask: Value, name: String) -> Value
+    extractValue: extern(LLVMBuildExtractValue) func (agg: Value, index: UInt, name: String) -> Value
+    insertValue: extern(LLVMBuildInsertValue) func (agg, val: Value, index: UInt, name: String) -> Value
+
+    isNull:    extern(LLVMBuildIsNull)    func (Value, name: String) -> Value
+    isNotNull: extern(LLVMBuildIsNotNull) func (Value, name: String) -> Value
+    ptrDiff:   extern(LLVMBuildPtrDiff)   func (lhs, rhs: Value, name: String) -> Value
 }
 
 
