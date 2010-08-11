@@ -1,3 +1,4 @@
 test
-ooc_tmp/
+*_tmp
 *~
+.libs
