@@ -25,18 +25,15 @@ ExecutionEngine: cover from LLVMExecutionEngineRef {
         e: This = null
         error := null as String
         LLVMCreateJITCompiler(e&, mp, 0, error&)
-        if(error) {
-//            Exception new(This, error) throw()
-        }
-        if(!e) {
-            Exception new(This, "Wtf?") throw()
+        if(error != null) {
+            Exception new(error) throw()
         }
         return e
     }
 
     dispose: extern(LLVMDisposeExecutionEngine) func
 
-    runFunction: extern(LLVMRunFunction) func (fn: Value, numArgs: UInt, args: GenericValue[]) -> GenericValue
+    runFunction: extern(LLVMRunFunction) func (fn: Value, numArgs: UInt, args: GenericValue*) -> GenericValue
 }
 
 LLVMCreateJITCompiler: extern func (ExecutionEngine*, ModuleProvider, UInt, String*) -> Int

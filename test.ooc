@@ -2,7 +2,13 @@ use llvm
 import llvm/[Core, ExecutionEngine]
 import structs/ArrayList
 
+LLVMLinkInJIT: extern func
+LLVMInitializeNativeTarget: extern func
+
 main: func {
+    LLVMLinkInJIT()
+    LLVMInitializeNativeTarget()
+    
     // Create an (empty) module.
     myModule := Module new("my_module")
 
@@ -53,9 +59,4 @@ main: func {
 
     result := engine runFunction(sum, 3, [arg1, arg2, arg3] as GenericValue*)
     result toInt(0) toString() println()
-
-    // A simple test for the enum covers. Currently broken in rock.
-    foo := Attribute naked
-    if(foo == Attribute noReturn) { "Wtf?" println() } else { "Yep." println() }
-    if(foo == Attribute naked) { "Yep." println() } else { "Wtf?" println() }
 }
