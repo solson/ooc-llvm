@@ -51,7 +51,7 @@ main: func {
     arg2 := GenericValue new(int_t, 5  as ULLong, 0)
     arg3 := GenericValue new(int_t, 2  as ULLong, 0)
 
-    result := engine runFunction(sum, 3, [arg1, arg2, arg3] as GenericValue[])
+    result := engine runFunction(sum, 3, [arg1, arg2, arg3] as GenericValue*)
     result toInt(0) toString() println()
 
     // A simple test for the enum covers. Currently broken in rock.
