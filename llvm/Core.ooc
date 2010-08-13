@@ -94,7 +94,7 @@ Type: cover from LLVMTypeRef {
     getVectorSize:          extern(LLVMGetVectorSize)          func -> UInt
 
     // Other types
-    void_:  extern(LLVMVoidType)  static func -> This
+    void_:  extern(LLVMVoidType)   static func -> This
     label:  extern(LLVMLabelType)  static func -> This
     opaque: extern(LLVMOpaqueType) static func -> This
 }
@@ -106,10 +106,17 @@ Value: cover from LLVMValueRef {
     dump:    extern(LLVMDumpValue)    func
 }
 
+LLVMGetFirstParam: extern func (Function) -> Value
+LLVMGetNextParam:  extern func (Value) -> Value
+
 Function: cover from Value {
     new: extern(LLVMAddFunction) static func (module: Module, name: String, functionType: Type) -> This
 
     appendBasicBlock: extern(LLVMAppendBasicBlock) func (String) -> BasicBlock
+
+    builder: func -> Builder {
+        appendBasicBlock("entry") builder()
+    }
 
     args: ArrayList<Value> {
         get {
@@ -126,7 +133,11 @@ Function: cover from Value {
     }
 }
 
-BasicBlock: cover from LLVMBasicBlockRef
+BasicBlock: cover from LLVMBasicBlockRef {
+    builder: func -> Builder {
+        Builder new(this)
+    }
+}
 
 Builder: cover from LLVMBuilderRef {
     new: extern(LLVMCreateBuilder)          static func -> This
@@ -253,9 +264,6 @@ ModuleProvider: cover from LLVMModuleProviderRef {
 
     dispose: extern(LLVMDisposeModuleProvider) func
 }
-
-LLVMGetFirstParam: extern func (Function) -> Value
-LLVMGetNextParam:  extern func (Value) -> Value
 
 // Enums
 Attribute: extern(LLVMAttribute) enum {
