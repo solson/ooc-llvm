@@ -36,7 +36,7 @@ Module: cover from LLVMModuleRef {
     setTarget: extern(LLVMSetTarget) func (triple: String)
 
     addTypeName:    extern(LLVMAddTypeName)    func (name: String, Type) -> Int
-    deleteTypename: extern(LLVMDeleteTypeName) func (name: String)
+    deleteTypeName: extern(LLVMDeleteTypeName) func (name: String)
     getTypeByName:  extern(LLVMGetTypeByName)  func (name: String) -> Type
 
     dump: extern(LLVMDumpModule) func
