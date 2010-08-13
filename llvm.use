@@ -1,5 +1,5 @@
 Name: LLVM
 Description: Low Level Virtual Machine
 Libs: -L/usr/lib/llvm -lpthread -lffi -ldl -lm -lLLVMCore -lLLVMSupport -lLLVMSystem
-Includes: llvm-c/Core.h, llvm-c/ExecutionEngine.h
+Includes: llvm-c/Core.h, llvm-c/ExecutionEngine.h, llvm-c/Target.h
 SourcePath: .
