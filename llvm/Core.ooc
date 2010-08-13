@@ -41,8 +41,22 @@ Module: cover from LLVMModuleRef {
 
     dump: extern(LLVMDumpModule) func
 
-    addFunction: func (functionType: Type, name: String) -> Function {
+    addFunction: func (name: String, functionType: Type) -> Function {
         Function new(this, name, functionType)
+    }
+
+    addFunction: func ~withRetAndArgs (name: String, ret: Type, arguments: ArrayList<Type>) -> Function {
+        Function new(this, name, Type function(ret, arguments))
+    }
+
+    addFunction: func ~withRetAndArgsWithName (name: String, ret: Type,
+             arguments: ArrayList<Type>, argNames: ArrayList<String>) -> Function {
+        fn := Function new(this, name, Type function(ret, arguments))
+        fnArgs := fn args
+        for(i in 0..argNames size()) {
+            fnArgs[i] setName(argNames[i])
+        }
+        fn
     }
 }
 
