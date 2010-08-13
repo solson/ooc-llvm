@@ -10,15 +10,15 @@ Context: cover from LLVMContextRef {
     dispose: extern(LLVMContextDispose) func
 
     // Types
-    float_:     extern(LLVMFloatTypeInContext)   func -> Value
-    double_:    extern(LLVMDoubleTypeInContext)  func -> Value
+    float_:    extern(LLVMFloatTypeInContext)   func -> Value
+    double_:   extern(LLVMDoubleTypeInContext)  func -> Value
     xf86_fp80: extern(LLVMX86FP80TypeInContext)  func -> Value
     fp128:     extern(LLVMFP128TypeInContext)    func -> Value
     ppc_fp128: extern(LLVMPPCFP128TypeInContext) func -> Value
 
     struct_: extern(LLVMStructTypeInContext) func (elementTypes: Type*, elementCount: UInt, isPacked: Int) -> Value
 
-    void_:   extern(LLVMVoidTypeInContext)  func -> Value
+    void_:  extern(LLVMVoidTypeInContext)  func -> Value
     label:  extern(LLVMLabelTypeInContext)  func -> Value
     opaque: extern(LLVMOpaqueTypeInContext) func -> Value
 }
@@ -282,16 +282,16 @@ Attribute: extern(LLVMAttribute) enum {
 }
 
 TypeKind: extern(LLVMTypeKind) enum {
-    void_:      extern(LLVMVoidTypeKind)
-    float_:     extern(LLVMFloatTypeKind)
-    double_:    extern(LLVMDoubleTypeKind)
+    void_:     extern(LLVMVoidTypeKind)
+    float_:    extern(LLVMFloatTypeKind)
+    double_:   extern(LLVMDoubleTypeKind)
     x86_fp80:  extern(LLVMX86_FP80TypeKind)
     fp128:     extern(LLVMFP128TypeKind)
     ppc_fp128: extern(LLVMPPC_FP128TypeKind)
     label:     extern(LLVMLabelTypeKind)
     integer:   extern(LLVMIntegerTypeKind)
     function:  extern(LLVMFunctionTypeKind)
-    struct_:    extern(LLVMStructTypeKind)
+    struct_:   extern(LLVMStructTypeKind)
     array:     extern(LLVMArrayTypeKind)
     pointer:   extern(LLVMPointerTypeKind)
     opaque:    extern(LLVMOpaqueTypeKind)
