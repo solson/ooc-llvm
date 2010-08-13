@@ -111,16 +111,18 @@ Function: cover from Value {
 
     appendBasicBlock: extern(LLVMAppendBasicBlock) func (String) -> BasicBlock
 
-    args: func -> ArrayList<Value> {
-        argsList := ArrayList<Value> new()
-        param := LLVMGetFirstParam(this)
+    args: ArrayList<Value> {
+        get {
+            argsList := ArrayList<Value> new()
+            param := LLVMGetFirstParam(this)
 
-        while(param != null) {
-            argsList add(param)
-            param = LLVMGetNextParam(param)
+            while(param != null) {
+                argsList add(param)
+                param = LLVMGetNextParam(param)
+            }
+
+            argsList
         }
-
-        argsList
     }
 }
 
