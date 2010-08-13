@@ -206,7 +206,7 @@ Builder: cover from LLVMBuilderRef {
     srem:      extern(LLVMBuildSRem)      func (lhs, rhs: Value, name: String) -> Value
     frem:      extern(LLVMBuildFRem)      func (lhs, rhs: Value, name: String) -> Value
     shl:       extern(LLVMBuildShl)       func (lhs, rhs: Value, name: String) -> Value
-    lshl:      extern(LLVMBuildLShr)      func (lhs, rhs: Value, name: String) -> Value
+    lshr:      extern(LLVMBuildLShr)      func (lhs, rhs: Value, name: String) -> Value
     ashr:      extern(LLVMBuildAShr)      func (lhs, rhs: Value, name: String) -> Value
     and:       extern(LLVMBuildAnd)       func (lhs, rhs: Value, name: String) -> Value
     or:        extern(LLVMBuildOr)        func (lhs, rhs: Value, name: String) -> Value
