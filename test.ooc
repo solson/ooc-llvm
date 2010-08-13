@@ -1,13 +1,12 @@
 use llvm
-import llvm/[Core, ExecutionEngine]
+import llvm/[Core, ExecutionEngine, Target]
 import structs/ArrayList
 
 LLVMLinkInJIT: extern func
-LLVMInitializeNativeTarget: extern func
 
 main: func {
     LLVMLinkInJIT()
-    LLVMInitializeNativeTarget()
+    Target initializeNative()
     
     // Create an (empty) module.
     myModule := Module new("my_module")
@@ -25,9 +24,9 @@ main: func {
     sum := myModule addFunction(func_t, "sum")
 
     // Let's name the function arguments 'a', 'b', and 'c'.
-    sum args()[0] setName("a")
-    sum args()[1] setName("b")
-    sum args()[2] setName("c")
+    sum args[0] setName("a")
+    sum args[1] setName("b")
+    sum args[2] setName("c")
 
     // Our function needs a "basic block" -- a set of instructions that
     // end with a terminator (like return, branch etc.). By convention
@@ -41,8 +40,8 @@ main: func {
     // OK, now for the instructions themselves. We'll create an add
     // instruction that returns the sum as a value, which we'll use
     // a ret instruction to return.
-    tmp := builder add(sum args()[0], sum args()[1], "tmp")
-    tmp2 := builder add(tmp, sum args()[2], "tmp2")
+    tmp := builder add(sum args[0], sum args[1], "tmp")
+    tmp2 := builder add(tmp, sum args[2], "tmp2")
     builder ret(tmp2)
 
     // We've completed the definition now! Let's see the LLVM assembly
