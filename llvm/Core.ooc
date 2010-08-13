@@ -149,12 +149,13 @@ Builder: cover from LLVMBuilderRef {
     dispose: extern(LLVMDisposeBuilder) func
 
     // Terminator instructions
-    retVoid:      extern(LLVMBuildRetVoid)      func -> Value
-    ret:          extern(LLVMBuildRet)          func (Value) -> Value
-    aggregateRet: extern(LLVMBuildAggregateRet) func (Value*, UInt) -> Value
-    br:           extern(LLVMBuildBr)           func (dest: BasicBlock) -> Value
-
-    condBr: extern(LLVMBuildCondBr) func (condition: Value, thenBlock: BasicBlock, elseBlock: BasicBlock) -> Value
+    ret: extern(LLVMBuildRetVoid)      func ~void -> Value
+    ret: extern(LLVMBuildRet)          func (Value) -> Value
+    ret: extern(LLVMBuildAggregateRet) func ~aggregate (Value*, UInt) -> Value
+    
+    br: extern(LLVMBuildBr)     func (dest: BasicBlock) -> Value
+    br: extern(LLVMBuildCondBr) func ~cond (cond: Value, iftrue: BasicBlock, iffalse: BasicBlock) -> Value
+    
     switch: extern(LLVMBuildSwitch) func (val: Value, elseBlock: BasicBlock, numCases: UInt) -> Value
     invoke: extern(LLVMBuildInvoke) func (fn: Value, args: Value*, numArgs: UInt, thenBlock: BasicBlock, catchBlock: BasicBlock, name: String) -> Value
 
