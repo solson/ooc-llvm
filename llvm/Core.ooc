@@ -45,15 +45,15 @@ Module: cover from LLVMModuleRef {
         Function new(this, name, functionType)
     }
 
-    addFunction: func ~withRetAndArgs (name: String, ret: Type, arguments: ArrayList<Type>) -> Function {
+    addFunction: func ~withRetAndArgs (name: String, ret: Type, arguments: Type[]) -> Function {
         Function new(this, name, Type function(ret, arguments))
     }
 
     addFunction: func ~withRetAndArgsWithName (name: String, ret: Type,
-             arguments: ArrayList<Type>, argNames: ArrayList<String>) -> Function {
+             arguments: Type[], argNames: String[]) -> Function {
         fn := Function new(this, name, Type function(ret, arguments))
         fnArgs := fn args
-        for(i in 0..argNames size()) {
+        for(i in 0..argNames length) {
             fnArgs[i] setName(argNames[i])
         }
         fn
@@ -82,8 +82,8 @@ Type: cover from LLVMTypeRef {
     function: extern(LLVMFunctionType) static func (returnType: Type,
         paramTypes: Type*, paramCount: UInt, varArg?: Int) -> Type
 
-    function: static func ~withArrayList (returnType: This, paramTypes: ArrayList<This>) -> This {
-        function(returnType, paramTypes toArray() as This*, paramTypes size(), false as Int)
+    function: static func ~withArray (returnType: This, paramTypes: This[]) -> This {
+        function(returnType, paramTypes data, paramTypes length, false as Int)
     }
 
     isFunctionVarArg: extern(LLVMIsFunctionVarArg) func -> Int
@@ -97,7 +97,7 @@ Type: cover from LLVMTypeRef {
     getStructElementTypes:   extern(LLVMGetStructElementTypes)   func (dest: This*)
     isPackedStruct:          extern(LLVMIsPackedStruct)          func -> Int
 
-    // Array, pointer, and vector rtpes (sequence types)
+    // Array, pointer, and vector types (sequence types)
     array:   extern(LLVMArrayType)   static func (elementType: This, elementCount: UInt) -> This
     pointer: extern(LLVMPointerType) static func (elementType: This, addressSpace: UInt) -> This
     vector:  extern(LLVMVectorType)  static func (elementType: This, elementCount: UInt) -> This
@@ -111,6 +111,18 @@ Type: cover from LLVMTypeRef {
     void_:  extern(LLVMVoidType)   static func -> This
     label:  extern(LLVMLabelType)  static func -> This
     opaque: extern(LLVMOpaqueType) static func -> This
+
+    // Constants
+    constNull:        extern(LLVMConstNull)        func -> Value
+    constAllOnes:     extern(LLVMConstAllOnes)     func -> Value
+    getUndef:         extern(LLVMGetUndef)         func -> Value
+//    constant?:        extern(LLVMIsConstant)       func -> Bool
+//    null?:            extern(LLVMIsNull)           func -> Bool
+//    undef?:           extern(LLVMIsUndef)          func -> Bool
+    constPointerNull: extern(LLVMConstPointerNull) func -> Value
+
+    // Scalar constants
+    
 }
 
 Value: cover from LLVMValueRef {
@@ -130,6 +142,10 @@ Function: cover from Value {
 
     builder: func -> Builder {
         appendBasicBlock("entry") builder()
+    }
+
+    build: func (fn: Func (Builder, ArrayList<Value>)) {
+        fn(builder(), args)
     }
 
     args: ArrayList<Value> {
