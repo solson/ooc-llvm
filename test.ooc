@@ -18,8 +18,8 @@ main: func {
     // free-standing; thye need to be contained in a module.
     // Let's name the function arguments 'a', 'b', and 'c'.
     sum := myModule addFunction("sum", i32,
-        [i32, i32, i32] as ArrayList<Type>,
-        ["a", "b", "c"] as ArrayList<String>)
+        [i32, i32, i32],
+        ["a", "b", "c"])
 
     // Our function needs a "basic block" -- a set of instructions that
     // end with a terminator (like return, branch etc.). By convention
