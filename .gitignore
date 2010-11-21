@@ -2,3 +2,4 @@ test
 *_tmp
 *~
 .libs
+*.swp
