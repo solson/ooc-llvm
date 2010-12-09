@@ -325,6 +325,9 @@ Builder: cover from LLVMBuilderRef {
     call: func ~withArray (fn: Function, args: Value[], name := "") -> Value {
         call(fn, args data, args length, name)
     }
+    call: func ~withArrayList (fn: Function, args: ArrayList<Value>, name := "") -> Value {
+        call(fn, args toArray() as Value*, args size as UInt, name)
+    }
     select:         extern(LLVMBuildSelect)         func (ifVal, thenVal, elseVal: Value, name: CString) -> Value
     vaArg:          extern(LLVMBuildVAArg)          func (list: Value, Type, name: CString) -> Value
     extractElement: extern(LLVMBuildExtractElement) func (vector, index: Value, name: CString) -> Value
