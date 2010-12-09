@@ -288,8 +288,8 @@ Builder: cover from LLVMBuilderRef {
     gepInbounds: extern(LLVMBuildInBoundsGEP) func (ptr: Value, indices: Value*, numIndicies: UInt, name: CString) -> Value
     gepStruct:   extern(LLVMBuildStructGEP)   func (ptr: Value, idx: UInt, name: CString) -> Value
 
-    globalCString:    extern(LLVMBuildGlobalString)    func (str: CString, name: CString) -> Value
-    globalCStringPtr: extern(LLVMBuildGlobalStringPtr) func (str: CString, name: CString) -> Value
+    globalString:    extern(LLVMBuildGlobalString)    func (str: CString, name: CString) -> Value
+    globalStringPtr: extern(LLVMBuildGlobalStringPtr) func (str: CString, name: CString) -> Value
 
     // Cast instructions
     trunc:          extern(LLVMBuildTrunc)          func (Value, Type, CString) -> Value
