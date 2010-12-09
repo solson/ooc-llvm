@@ -322,7 +322,7 @@ Builder: cover from LLVMBuilderRef {
     // Miscellaneous instructions
     phi:            extern(LLVMBuildPhi)            func (Type, name: CString) -> Value
     call:           extern(LLVMBuildCall)           func (fn: Function, args: Value*, numArgs: UInt, name: CString) -> Value
-    call: func ~withArray (fn: Function, args: Value[], name: String) -> Value {
+    call: func ~withArray (fn: Function, args: Value[], name := "") -> Value {
         call(fn, args data, args length, name)
     }
     select:         extern(LLVMBuildSelect)         func (ifVal, thenVal, elseVal: Value, name: CString) -> Value
