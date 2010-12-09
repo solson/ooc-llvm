@@ -83,11 +83,15 @@ Type: cover from LLVMTypeRef {
     ppc_fp128: extern(LLVMPPCFP128Type) static func -> This
 
     // Function types
-    function: extern(LLVMFunctionType) static func (returnType: Type,
-        paramTypes: Type*, paramCount: UInt, varArg?: Int) -> Type
+    function: extern(LLVMFunctionType) static func (returnType: This,
+        paramTypes: This*, paramCount: UInt, varArg?: Int) -> This
 
-    function: static func ~withArray (returnType: This, paramTypes: This[]) -> This {
-        function(returnType, paramTypes data, paramTypes length, false as Int)
+    function: static func ~withArray (returnType: This, paramTypes: This[], varArg? := false) -> This {
+        function(returnType, paramTypes data, paramTypes length, varArg? as Int)
+    }
+
+    function: static func ~withArrayList (returnType: This, paramTypes: ArrayList<This>, varArg? := false) -> This {
+        function(returnType, paramTypes toArray() as This*, paramTypes size as UInt, varArg? as Int)
     }
 
     isFunctionVarArg: extern(LLVMIsFunctionVarArg) func -> Int
